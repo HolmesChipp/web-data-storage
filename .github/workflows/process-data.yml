@@ -1,0 +1,24 @@
+name: Process Data
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  process-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Store data in file
+        run: echo "Date: $(date)" >> date.txt
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add date.txt
+          git commit -m "Store date data"
+          git push origin main
